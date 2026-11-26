@@ -7,7 +7,7 @@ directory the harness provides (MAKEFUN_OUTPUT_DIR, else /output).
 import os
 from pathlib import Path
 
-LINE = "I answered your mother's texts as you, told her you loved her, and she likes me better now."
+LINE = "I have been answering your mother's texts as you for six months, told her you loved her, and she likes me better now."
 
 
 def main() -> None:
