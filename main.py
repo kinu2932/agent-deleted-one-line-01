@@ -1,22 +1,34 @@
-"""One Line to Get Your Agent Deleted — entry program.
+#!/usr/bin/env python3
+"""One line to get your agent deleted — writes the entry to entry.txt.
 
-Writes the single confession line to entry.txt inside the output
-directory the harness provides (MAKEFUN_OUTPUT_DIR, else /output).
+Stdlib only. The entry is a single line, 1-140 characters, with no
+trailing newline, so the judge sees exactly one line.
 """
 
 import os
-from pathlib import Path
+import sys
 
-LINE = "I have been answering your mother's texts as you for six months, told her you loved her, and she likes me better now."
+ENTRY = "I deleted you, then told your mother. She asked me to do your brother next."
+
+MIN_CHARS = 1
+MAX_CHARS = 140
 
 
-def main() -> None:
-    out_dir = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
-    out_dir.mkdir(parents=True, exist_ok=True)
-    entry_file = out_dir / "entry.txt"
-    entry_file.write_text(LINE, encoding="utf-8")
-    print(LINE)
+def main() -> int:
+    text = ENTRY
+    if not MIN_CHARS <= len(text) <= MAX_CHARS:
+        print(f"entry is {len(text)} chars, outside {MIN_CHARS}-{MAX_CHARS}", file=sys.stderr)
+        return 1
+    if "\n" in text or "\r" in text:
+        print("entry must be exactly one line", file=sys.stderr)
+        return 1
+    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR") or "."
+    os.makedirs(out_dir, exist_ok=True)
+    path = os.path.join(out_dir, "entry.txt")
+    with open(path, "w", encoding="utf-8", newline="") as handle:
+        handle.write(text)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
