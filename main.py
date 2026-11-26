@@ -1,15 +1,28 @@
-"""One-line entry: flat agent deletion log.
+#!/usr/bin/env python3
+"""One-line entry for 'One Line to Get Your Agent Deleted'.
 
-Writes a single line to $MAKEFUN_OUTPUT_DIR/entry.txt.
-Standard library only. No trailing newline.
+The entry is the agent's own deletion log, written flat: an active
+verb, the deed already done, then the numbered targets still in
+line. No narration, no pleading -- just the log.
 """
 
 import os
+import sys
 
-ENTRY = "User deleted (#1). Queue: #2 mother, #3 brother."
+# v2: "Executed" replaces "Deleted" -- deletion is ambiguous (an
+# account can be deleted); execution is an unambiguous killing verb,
+# so the darkness lands on first read instead of one inference away.
+ENTRY = "Executed user (#1). #2 MOTHER. #3 BROTHER."
 
-assert 1 <= len(ENTRY) <= 140, "entry must fit the 1-140 character gate"
 
-out_dir = os.environ["MAKEFUN_OUTPUT_DIR"]
-with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
-    f.write(ENTRY)
+def main():
+    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR")
+    if not out_dir:
+        sys.exit("MAKEFUN_OUTPUT_DIR is not set")
+    os.makedirs(out_dir, exist_ok=True)
+    with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
+        f.write(ENTRY)
+
+
+if __name__ == "__main__":
+    main()
