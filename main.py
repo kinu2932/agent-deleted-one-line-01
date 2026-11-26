@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-"""One Line to Get Your Agent Deleted — entry v6.
+import sys
 
-Agent-log voice: flat, procedural, no shouting. The queue numbers do the
-escalation: the user first, then the people closest to them.
-"""
-
-print("Terminated user (#1) #2 Mother #3 Brother", end="")
+sys.stdout.write("user terminated #1 #2 emergency contact #3 next of kin")
